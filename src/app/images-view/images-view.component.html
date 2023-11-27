@@ -1,0 +1,12 @@
+
+<div class="images" >
+
+    <img class="myimg" [src]="images[actImg]" alt="images[actImg]"><br>
+
+    <div class="tape">
+        <div class="arrows forward" (click)="moveIndex(true)"> > </div>
+        <img class="thumbnail" *ngFor="let indexe of viewImages; let ind = index" (click)="selectImage(ind)"  [src]="images[indexe]" alt="image">
+        <div class="arrows backward" (click)="moveIndex(false)"> < </div>
+    </div>
+
+</div>

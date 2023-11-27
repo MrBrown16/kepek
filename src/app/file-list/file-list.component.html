@@ -1,0 +1,13 @@
+{{filesData|json}}
+<!-- <div class=" row images" *ngFor="let img of filesData">
+    <img src="{{img.url}}" class="rounded float-left col-4" alt="{{img.name}}">
+
+</div> -->
+
+<ul class="list-group">
+    <li *ngFor="let f of filesData" class="list-group-item">
+        <a [href]="f.url">{{f.name}}</a>
+        <button type="button" style="float: right;" (click)="deleteImg(f)">Delete</button>
+    </li>
+</ul>
+<app-images-view [images]="images"></app-images-view>
