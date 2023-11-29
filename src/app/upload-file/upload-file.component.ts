@@ -9,42 +9,61 @@ import { BaseService } from '../base.service';
 export class UploadFileComponent {
   
   selectedFiles:any
-  percentage=0
+  
+  percentages:any
   visible=false
+  going:any
 
-
+  szinek:any
   constructor(private base:BaseService){
   }
 
   fileSelect(event:any){
-    this.selectedFiles=event.target.files[0]
+    this.selectedFiles=Array.from(event.target.files).filter(
+      (e:any)=>{return e.type.includes('image')}
+    )
+    this.percentages=new Array(this.selectedFiles.length)
     console.log(this.selectedFiles)
   }
   uploadFile(){
     if (this.selectedFiles!=undefined) {
-      
-      this.base.uploadFile(this.selectedFiles).subscribe(
-        (p)=>{
-          this.visible=true
-          console.log(p+"%"),
-          this.percentage=p?Math.round(p):0
-          this.selectedFiles=undefined          
-          if (this.percentage==100) {
-            setTimeout(()=>{
-              console.log("timeOut")
-              this.visible=false
-              this.percentage=0
-            },5000)
+      this.going=this.selectedFiles.length
+      this.selectedFiles.forEach((e:any, i:any) => {
+        this.percentages[i]=0
+        this.base.uploadFile(e).subscribe(
+          (p)=>{
+            this.visible=true
+            console.log(p+"%"),
+            this.percentages[i]=p?Math.round(p):0
+            this.selectedFiles=undefined          
+            if (this.percentages[i]==100) {
+              setTimeout(()=>{
+                console.log("timeOut")
+                console.log("timeOut going: ", this.going)
+                if (this.going==0) {
+                  this.visible=false
+                }else{
+                  this.going--
+                }
+                this.percentages[i]=0
+              },5000)
+            }
           }
-      }
-      )
+        )
+      });
     }
   }
 
-  resetFileUpload(){
-    console.log("timeOut")
-    this.visible=false
-    this.percentage=0
+
+  generateSzinek(num:any){
+    this.szinek=new Array(num)
+    for(let i=0; i<=num; i++){
+      this.szinek.push({r:this.generateColorcomp(), g:this.generateColorcomp(), b: this.generateColorcomp()})
+      
+    }
     
+  }
+  generateColorcomp(){
+    return Math.floor(Math.random()*255)
   }
 }

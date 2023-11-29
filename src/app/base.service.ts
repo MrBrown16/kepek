@@ -51,11 +51,10 @@ export class BaseService {
   deleteImage(file:any){
     
     this.storage.ref("/kepek/"+file.name).delete().subscribe(
-      (c)=>{
-        console.log(c)
+      ()=>{ 
         this.refFilesData.remove(file.key).then(
           (a)=>console.log(a, " sikeres Törlés")
-        )
+        ).catch((e:any)=>console.log("hiba a törlés közben", e))
       }
     )
   }

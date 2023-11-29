@@ -1,12 +1,16 @@
 
-<div class="images" >
+<div  class="images" >
 
-    <img class="myimg" [src]="images[actImg]" alt="images[actImg]"><br>
+    <img class="myimg" [src]="images[actInd]" alt="images[actInd]"><br>
 
     <div class="tape">
-        <div class="arrows forward" (click)="moveIndex(true)"> > </div>
-        <img class="thumbnail" *ngFor="let indexe of viewImages; let ind = index" (click)="selectImage(ind)"  [src]="images[indexe]" alt="image">
-        <div class="arrows backward" (click)="moveIndex(false)"> < </div>
+        <div *ngIf="actInd>0" class="arrows forward" (click)="moveIndex(true)"> &LeftArrow; </div>
+        <img class="thumbnail" *ngFor="let indexe of viewImages; let ind = index" (click)="selectImage(ind)"  [src]="viewImages[ind]" alt="image">
+        <div *ngIf="kezdInd<images.length-2" class="arrows backward" (click)="moveIndex(false)"> &RightArrow; </div>
     </div>
+    {{kezdInd}}
+    {{actInd}}
+    {{viewImages.length}}
+    {{images.length}}
 
 </div>

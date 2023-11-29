@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, SimpleChanges } from '@angular/core';
 
 @Component({
   selector: 'app-images-view',
@@ -6,22 +6,37 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./images-view.component.css']
 })
 export class ImagesViewComponent {
-  actImg:any
-  
-  viewImages=[0,1,2]
+  actInd:any
+  kezdInd:any
+  viewImages=[]
 
   @Input() images:any;
 
   constructor(){
-    this.actImg=0
+    this.actInd=0
+    this.kezdInd=0
   }
 
+  ngOnChanges(changes:SimpleChanges):void{
+    if (changes['images'].currentValue!=changes['images'].previousValue) {
+      this.viewImages=this.images.slice(0,3)
+    }
+  }
 
   selectImage(index:any){
-    this.actImg=index
+    this.actInd=this.kezdInd+index
   } 
 
   moveIndex(elore:boolean){
+
+    if (!elore) {
+      this.kezdInd++
+    }else{
+      this.kezdInd--
+    }
+    this.viewImages=this.images.slice(this.kezdInd, this.kezdInd+3)
+
+
     // this.viewImages.forEach((e) => {
     //   if (elore) {
     //     console.log("elore")

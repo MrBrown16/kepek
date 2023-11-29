@@ -1,3 +1,7 @@
+.images{
+    user-select: none;
+
+}
 .thumbnail{
     max-width:100px;
     max-height:100px;
@@ -15,6 +19,8 @@
 .arrows{
     position: absolute;
     top: 47px;
+    font-weight: bold;
+    font-size: 3em;
 }
 .forward{
     left: 0;
